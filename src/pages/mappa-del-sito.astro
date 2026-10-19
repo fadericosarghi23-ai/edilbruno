@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+import { nav } from '../data/nav';
+import { servizi } from '../data/servizi';
+import { categorie, inCategoria } from '../data/progetti';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Mappa del sito', href: '/mappa-del-sito/' }];
+---
+<Layout title={`Mappa del sito | ${site.nome}`} description={`Tutte le pagine del sito di ${site.nome}: l’impresa, i servizi, i lavori e i contatti.`} crumbs={crumbs}>
+<PageHead crumbs={crumbs} title="Mappa del sito" />
+<section class="section"> <div class="container grid-2 prose"> <div> <h2>Pagine</h2> <ul> <li><a href="/">Home</a></li> {nav.map((v) => <li><a href={v.href}>{v.label}</a></li>)} <li><a href="/privacy-policy/">Privacy policy</a></li> <li><a href="/cookie-policy/">Cookie policy</a></li> </ul> <h2>Servizi</h2> <ul>{servizi.map((s) => <li><a href={`/servizi/#${s.id}`}>{s.nome}</a></li>)}</ul> </div> <div>  {categorie.map((c) => <><h2><a href={`/progetti/${c.slug}/`} style="text-decoration:none; color:inherit">{c.nome}</a></h2> <ul>{inCategoria(c.id).map((p) => <li><a href={`/progetti/${p.slug}/`}>{p.titolo}</a> <span class="muted small">— {p.luogo}</span></li>)}</ul></>)} </div> </div> </section>
+</Layout>

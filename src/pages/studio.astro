@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Picture from '../components/Picture.astro';
+import Cta from '../components/Cta.astro';
+import { site } from '../data/site';
+import { ex } from '../lib/bozza';
+import { team } from '../data/team';
+import { progetto } from '../data/progetti';
+import { numeriStudio, approccio, competenzeStudio } from '../data/contenuti';
+
+// Pagina "L'impresa" (rotta /studio/ della base). EDILBRUNO: tolto l'elenco dei collaboratori.
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'L’impresa', href: '/studio/' }];
+const hero = progetto('cartongesso-busto').immagini[0];
+const foto = [progetto('pavimento-samarate').immagini[2], progetto('muratura-gallarate').immagini[2]];
+---
+<Layout title="L’impresa | EDILBRUNO, impresa edile a Gallarate" description="EDILBRUNO è l’impresa individuale di Bruno Onofrio Michael a Gallarate (VA): piccole ristrutturazioni, muratura, piastrelle e pavimenti, lavori di completamento." pageType="AboutPage" ogType="article" transparent crumbs={crumbs}>
+<PageHero img={hero} crumbs={crumbs} eyebrow="L’impresa"> <h1 class="h1-page">{ex('Lavoro fatto')} <em style="color: var(--accent-on-dark)">{ex('a regola d’arte')}</em></h1> <p class="lead">Impresa edile individuale con sede a Gallarate (VA).</p> </PageHero>
+<section class="section"> <div class="container split"> <div class="reveal"> <p class="eyebrow mb-2">Chi siamo</p> <h2 class="h2">{site.nome}</h2> </div> <div class="prose lead reveal"> <p>{ex('Piccole ristrutturazioni, muratura e posa di pavimenti e rivestimenti per case e locali, con attenzione ai dettagli e ai tempi concordati.')}</p> <p>Impresa individuale di Bruno Onofrio Michael, con sede a Gallarate (VA).</p> </div> </div> <div class="container mt-4"> <div class="stats reveal"> {numeriStudio.map((s) => <div class="stat"><strong>{s.n}</strong><span>{s.label}</span></div>)} </div> </div> </section>
+<section class="section bg-sand"> <div class="container"> <div class="section-head reveal"> <div> <p class="eyebrow">Come lavoriamo</p> <h2 class="h2">{ex('Precisione, cura, affidabilità')}</h2> </div> </div> <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2.5rem"> {approccio.map((a, i) => <div class="reveal border-top" style={`padding-top:1.5rem; transition-delay:${i * 80}ms`}> <p class="eyebrow mb-2">{String(i + 1).padStart(2, '0')}</p> <h3 class="h3 mb-2">{a.titolo}</h3> <p>{a.testo}</p> </div>)} </div> <div class="grid-2 mt-4"> {foto.map((f) => <div class="ratio-32 reveal"><Picture img={f} sizes="(min-width: 1024px) 45vw, 92vw" /></div>)} </div> </div> </section>
+<section class="section" id="team"> <div class="container"> <div class="section-head reveal"> <div> <p class="eyebrow">Il titolare</p> <h2 class="h2">Chi c’è dietro {site.nome}</h2> <p class="lead mt-2">EDILBRUNO è un’impresa individuale: il titolare è Bruno Onofrio Michael.</p> </div> </div> <ul class="team-grid"> {team.map((m, i) => <li class="member reveal" id={m.id} style={`transition-delay:${(i % 4) * 60}ms`}> <div class="photo"><Picture img={m.foto} sizes="(min-width: 1100px) 22vw, (min-width: 768px) 30vw, 46vw" /></div> <h3>{m.nome}</h3> <p>{m.ruolo}</p> {m.bio && <p style="text-transform:none; letter-spacing:0; color:var(--text); font-size:.9375rem; font-weight:400; line-height:1.6; margin-top:.9rem">{m.bio}</p>} </li>)} </ul> </div> </section>
+<section class="section bg-sand"> <div class="container grid-2"> <div class="reveal"> <p class="eyebrow mb-2">Sede</p> <h2 class="h2">{site.indirizzo.citta} e dintorni</h2> <p class="lead mt-3">{site.indirizzo.via}, {site.indirizzo.cap} {site.indirizzo.citta} ({site.indirizzo.provincia}), {site.indirizzo.paeseNome}.</p> <div class="btn-row mt-4"> <a href="/contatti/" class="btn btn-primary">Contatti</a> <a href={site.mapsUrl} target="_blank" rel="noopener" class="btn btn-outline">Indicazioni</a> </div> </div> <div class="reveal"> <ul class="checklist lead"> {competenzeStudio.map((c) => <li>{c}</li>)} </ul> </div> </div> </section>
+<Cta />
+</Layout>

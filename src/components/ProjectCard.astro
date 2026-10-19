@@ -1,0 +1,10 @@
+---
+/** Card progetto (griglia 3 colonne). h = livello del titolo (h2 nelle pagine portfolio, h3 altrove). */
+import Picture from './Picture.astro';
+import { categoria, copertina, type Progetto } from '../data/progetti';
+interface Props { p: Progetto; h?: 'h2' | 'h3'; eager?: boolean }
+const { p, h = 'h3', eager = false } = Astro.props;
+const H = h;
+const cover = copertina(p);
+---
+<article class="reveal"> <a href={`/progetti/${p.slug}/`} class="card"> <div class:list={['media', { 'is-drawing': cover.drawing }]}> <span class="cat">{categoria(p.categoria).etichetta}</span> <Picture img={cover} sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw" eager={eager} /> </div> <H>{p.titolo}</H> <p class="loc">{p.luogo}</p> <ul class="tags" aria-label="Caratteristiche del lavoro"> {p.temi.map((t) => <li>{t}</li>)} </ul> </a> </article>

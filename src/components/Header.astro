@@ -1,0 +1,13 @@
+---
+/**
+ * Header fisso + menu mobile. transparent = sopra una foto (home e testate con foto):
+ * parte trasparente con logo chiaro e diventa pieno dopo 40px di scroll (script in Layout.astro).
+ * Loghi: due file delle stesse misure (scuro su chiaro / chiaro su scuro).
+ */
+import { site, indirizzoRiga } from '../data/site';
+import { nav } from '../data/nav';
+interface Props { transparent?: boolean }
+const { transparent = false } = Astro.props;
+const path = Astro.url.pathname;
+---
+<header class:list={['site-header', transparent ? 'is-transparent' : 'is-solid']} data-transparent={String(transparent)}> <div class="container"> <a href="/" class="brand" aria-label={`${site.nome} — home`}> <img src="/img/logo/logo.svg" width="882" height="182" alt={site.logoAlt} class="logo-dark" fetchpriority={transparent ? 'auto' : 'high'} decoding="async"> <img src="/img/logo/logo-light.svg" width="882" height="182" alt={site.logoAlt} class="logo-light" fetchpriority={transparent ? 'high' : 'auto'} decoding="async"> </a> <nav class="main-nav" aria-label="Menu principale"> {nav.map((v) => <a href={v.href} class="link-underline" aria-current={path === v.href ? 'page' : undefined}>{v.label}</a>)} <a href="/contatti/#richiesta" class="btn btn-primary btn-sm nav-cta">Contattaci</a> </nav> <button type="button" class="menu-toggle" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobile-menu"> <span></span><span></span><span></span> </button> </div> </header> <div id="mobile-menu" class="mobile-menu" hidden> <div class="container section-sm"> <nav aria-label="Menu mobile"> <a href="/">Home</a> {nav.map((v) => <a href={v.href}>{v.label}</a>)} </nav> <a href="/contatti/#richiesta" class="btn btn-primary mt-4">Contattaci</a> <div class="contacts"> <p>{indirizzoRiga}</p> <a href={`mailto:${site.email}`}>{site.email}</a> {site.telefono && <a href={`tel:${site.telefonoE164}`}>{site.telefono}</a>} </div> </div> </div>

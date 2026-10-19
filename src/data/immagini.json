@@ -1,0 +1,499 @@
+{
+ "_nota": "Foto d’esempio da Unsplash (scripts/foto-unsplash.mjs): NON sono lavori di EDILBRUNO, sostituire con le foto vere.",
+ "progetti": {
+  "bilocale-gallarate": [
+   {
+    "src": "/img/lavori/bilocale-gallarate/bilocale-gallarate-01-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1634586648651-f1fb9ec10d90",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bilocale-gallarate/bilocale-gallarate-02-1200.jpg",
+    "width": 2000,
+    "height": 1331,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1517581177682-a085bb7ffb15",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bilocale-gallarate/bilocale-gallarate-03-1200.jpg",
+    "width": 2000,
+    "height": 2666,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1656122381069-9ec666d95cf1",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bilocale-gallarate/bilocale-gallarate-04-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1560185127-6ed189bf02f4",
+    "drawing": false
+   }
+  ],
+  "bagno-busto-arsizio": [
+   {
+    "src": "/img/lavori/bagno-busto-arsizio/bagno-busto-arsizio-01-1200.jpg",
+    "width": 2000,
+    "height": 2999,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1782805153002-96e099970a9d",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bagno-busto-arsizio/bagno-busto-arsizio-02-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1721394745970-aba71c96836d",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bagno-busto-arsizio/bagno-busto-arsizio-03-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1523413555809-0fb1d4da238d",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/bagno-busto-arsizio/bagno-busto-arsizio-04-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1564540579594-0930edb6de43",
+    "drawing": false
+   }
+  ],
+  "cucina-cardano": [
+   {
+    "src": "/img/lavori/cucina-cardano/cucina-cardano-01-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1618832515490-e181c4794a45",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cucina-cardano/cucina-cardano-02-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1565183928294-7063f23ce0f8",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cucina-cardano/cucina-cardano-03-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1601760561441-16420502c7e0",
+    "drawing": false
+   }
+  ],
+  "pavimento-samarate": [
+   {
+    "src": "/img/lavori/pavimento-samarate/pavimento-samarate-01-1200.jpg",
+    "width": 2000,
+    "height": 1323,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1747729495579-b26ab7b9c3a6",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/pavimento-samarate/pavimento-samarate-02-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1656646523907-97b094c7e63a",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/pavimento-samarate/pavimento-samarate-03-1200.jpg",
+    "width": 2000,
+    "height": 1500,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1636200534256-c08268363482",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/pavimento-samarate/pavimento-samarate-04-1200.jpg",
+    "width": 2000,
+    "height": 2667,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1610449333145-b0e3538ffe1d",
+    "drawing": false
+   }
+  ],
+  "rivestimento-cassano": [
+   {
+    "src": "/img/lavori/rivestimento-cassano/rivestimento-cassano-01-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1523413307857-ef24c53571ae",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/rivestimento-cassano/rivestimento-cassano-02-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1523413363574-c30aa1c2a516",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/rivestimento-cassano/rivestimento-cassano-03-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1614598632980-35ee54daa5b9",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/rivestimento-cassano/rivestimento-cassano-04-1200.jpg",
+    "width": 2000,
+    "height": 1415,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1662624914003-9bb2095ca7a0",
+    "drawing": false
+   }
+  ],
+  "cortile-somma": [
+   {
+    "src": "/img/lavori/cortile-somma/cortile-somma-01-1200.jpg",
+    "width": 2000,
+    "height": 2667,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1753893558304-8b1b4b47348c",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cortile-somma/cortile-somma-02-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1747729495643-2c5cc5c9e2c1",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cortile-somma/cortile-somma-03-1200.jpg",
+    "width": 2000,
+    "height": 1505,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1630180799448-f58750c61184",
+    "drawing": false
+   }
+  ],
+  "muratura-gallarate": [
+   {
+    "src": "/img/lavori/muratura-gallarate/muratura-gallarate-01-1200.jpg",
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1704005445445-2747074be8ac",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/muratura-gallarate/muratura-gallarate-02-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1701850009190-2859ba2aeea6",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/muratura-gallarate/muratura-gallarate-03-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1734079692087-91bac04efcd1",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/muratura-gallarate/muratura-gallarate-04-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1592795694703-24f1814cfb0a",
+    "drawing": false
+   }
+  ],
+  "intonaci-castellanza": [
+   {
+    "src": "/img/lavori/intonaci-castellanza/intonaci-castellanza-01-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1768839725085-829e6ac7ac26",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/intonaci-castellanza/intonaci-castellanza-02-1200.jpg",
+    "width": 2000,
+    "height": 1334,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1733431772808-82d878e59000",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/intonaci-castellanza/intonaci-castellanza-03-1200.jpg",
+    "width": 2000,
+    "height": 2819,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1639430257115-f63af9eab97d",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/intonaci-castellanza/intonaci-castellanza-04-1200.jpg",
+    "width": 2000,
+    "height": 1334,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1541323429887-2e393b8db71c",
+    "drawing": false
+   }
+  ],
+  "cartongesso-busto": [
+   {
+    "src": "/img/lavori/cartongesso-busto/cartongesso-busto-01-1200.jpg",
+    "width": 2000,
+    "height": 1500,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1768321914149-5a6428ec2f82",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cartongesso-busto/cartongesso-busto-02-1200.jpg",
+    "width": 2000,
+    "height": 2667,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1768321916886-30dc323bddf7",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cartongesso-busto/cartongesso-busto-03-1200.jpg",
+    "width": 2000,
+    "height": 2998,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1770838773417-08b18661c62f",
+    "drawing": false
+   },
+   {
+    "src": "/img/lavori/cartongesso-busto/cartongesso-busto-04-1200.jpg",
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+     480,
+     800,
+     1200,
+     1600,
+     2000
+    ],
+    "unsplash": "1599619585752-c3edb42a414c",
+    "drawing": false
+   }
+  ]
+ }
+}

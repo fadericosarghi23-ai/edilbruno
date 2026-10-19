@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import { site, abs } from '../data/site';
+import { ex } from '../lib/bozza';
+import { servizi } from '../data/servizi';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Contatti', href: '/contatti/' }];
+const ld = [{
+  '@type': 'ContactPoint',
+  '@id': abs('/contatti/#contatto'),
+  contactType: 'customer service',
+  ...(site.telefonoE164 ? { telephone: site.telefonoE164 } : {}),
+  email: site.email,
+  areaServed: [site.indirizzo.paese],
+  availableLanguage: site.lingue,
+}];
+// Form: collegato solo se site.form è configurato. Altrimenti, con site.form.mailto, il submit
+// apre il programma di posta già compilato (data-mailto); senza nemmeno quello è bloccato.
+const f = site.form;
+const collegato = f.netlify || f.endpoint !== '';
+const action = f.netlify ? '/grazie/' : f.endpoint || '#';
+const ig = site.social.find((s) => s.icona === 'instagram');
+---
+<Layout title={`Contatti – ${site.nome}, impresa edile a ${site.indirizzo.citta}`} description="Contatta EDILBRUNO, impresa edile a Gallarate (VA): telefono +39 378 427 0606 o il modulo di contatto per piccole ristrutturazioni, muratura, piastrelle e pavimenti." pageType="ContactPage" ogType="article" crumbs={crumbs} ld={ld}>
+<PageHead crumbs={crumbs} eyebrow="Contatti" title={ex('Richiedi un preventivo')}> <p class="lead mt-3 narrow">{ex('Descrivici il lavoro da fare: ti richiamiamo per fissare un sopralluogo e prepariamo un preventivo scritto.')}</p> </PageHead>
+<section class="section"> <div class="container contact-layout"> <div class="contact-side"> <div class="info-cards"> <div class="info-card"> <h2><Icon name="pin" class="ic" /> {site.indirizzo.citta}</h2> <p>{site.indirizzo.via}<br>{site.indirizzo.cap} {site.indirizzo.citta} ({site.indirizzo.provincia}), {site.indirizzo.paeseNome}</p> <a href={site.mapsUrl} target="_blank" rel="noopener" class="text-link link-underline">Indicazioni</a> </div> {site.telefono && <div class="info-card"> <h2><Icon name="telefono" class="ic" /> Telefono</h2> <p><a href={`tel:${site.telefonoE164}`}>{site.telefono}</a></p> <a href={`tel:${site.telefonoE164}`} class="text-link link-underline">Chiamaci</a> </div>} <div class="info-card"> <h2><Icon name="email" class="ic" /> Email</h2> <p><a href={`mailto:${site.email}`}>{site.email}</a></p> <a href={`mailto:${site.email}`} class="text-link link-underline">Scrivici</a> </div> {ig && <div class="info-card"> <h2><Icon name="instagram" class="ic" /> Instagram</h2> <p><a href={ig.url} target="_blank" rel="noopener">{ig.handle}</a></p> </div>} </div> <div class="map-box"> <MapEmbed span={0.01} /> </div> <p class="xs muted">Mappa © contributori OpenStreetMap · sede di {site.indirizzo.citta}</p> </div> <div id="richiesta" class="form-card"> <h2 class="h3">Scrivici</h2> <p class="mt-1 muted">Compila il modulo e ti ricontatteremo.</p> <form class="form" name="contatti" method="POST" action={action} data-netlify={f.netlify ? 'true' : undefined} netlify-honeypot={f.netlify ? 'indirizzo-web' : undefined} data-form-off={collegato ? undefined : ''} data-mailto={collegato ? undefined : f.mailto}> <input type="hidden" name="form-name" value="contatti"> <p class="hp"><label>Non compilare: <input name="indirizzo-web" tabindex="-1" autocomplete="off"></label></p> <div class="two"> <div class="field"><label for="f-nome">Nome *</label><input id="f-nome" name="nome" required autocomplete="name"></div> <div class="field"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" required autocomplete="email"></div> </div> <div class="two"> <div class="field"><label for="f-tel">Telefono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div> <div class="field"><label for="f-comune">Comune</label><input id="f-comune" name="comune" autocomplete="address-level2"></div> </div> <div class="field"> <label for="f-servizio">Di cosa hai bisogno?</label> <select id="f-servizio" name="servizio"> <option value="">Scegli un tipo di lavoro</option> {servizi.map((s) => <option>{s.nome}</option>)} <option>Altro</option> </select> </div> <div class="field"> <label for="f-msg">Messaggio *</label> <textarea id="f-msg" name="messaggio" required placeholder="Descrivi in breve il lavoro da fare"></textarea> </div> <label class="check"> <input type="checkbox" name="privacy" required> <span>Ho letto l’<a href="/privacy-policy/">informativa privacy</a> e acconsento al trattamento dei miei dati per ricevere una risposta. *</span> </label> <div><button type="submit" class="btn btn-primary">Invia il messaggio</button></div> </form> </div> </div> </section>
+<script>
+// Finché il form non è collegato (src/data/site.ts → form): con data-mailto apre il programma di
+// posta con il messaggio già compilato, altrimenti l'invio è bloccato.
+const off = document.querySelector('form[data-form-off]');
+off?.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const to = off.getAttribute('data-mailto');
+  if (!to) { alert('Sito in bozza: il modulo non è ancora attivo e non invia richieste. Per ora chiama il numero indicato.'); return; }
+  const d = new FormData(off);
+  const body = ['Nome: ' + (d.get('nome') || ''), 'Email: ' + (d.get('email') || ''), 'Telefono: ' + (d.get('telefono') || ''), 'Comune: ' + (d.get('comune') || ''), 'Lavoro: ' + (d.get('servizio') || ''), '', String(d.get('messaggio') || '')].join('\n');
+  window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent('Richiesta dal sito') + '&body=' + encodeURIComponent(body);
+});
+</script>
+</Layout>

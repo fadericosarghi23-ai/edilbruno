@@ -1,0 +1,36 @@
+---
+/**
+ * Intro d'apertura col logo: i 7 mattoni del marchio si posano dal basso verso l'alto, compaiono
+ * il nome e la riga sotto, poi il pannello sale e scopre la pagina.
+ * Parte solo alla prima pagina della visita (sessionStorage, impostato in <head> da Layout.astro con
+ * la classe html.intro-on, così non lampeggia nelle pagine successive). Senza JS non compare.
+ * Con "riduci animazioni" non compare (regola in coda a global.css).
+ * Il marchio è PROVVISORIO (scripts/marchio.mjs): col logo vero si cambia il segno qui sotto.
+ */
+import { site } from '../data/site';
+
+// Mattoni del marchio (stesso disegno di scripts/marchio.mjs), in ordine di posa: fila in basso, centro, alto
+const MATTONI = [
+  [4, 42, 26], [34, 42, 26],
+  [4, 25, 12], [20, 25, 24], [48, 25, 12],
+  [4, 8, 26], [34, 8, 26],
+];
+---
+<div class="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <svg class="intro-mattoni" viewBox="0 0 64 64" width="96" height="96" fill="none">
+      {MATTONI.map(([x, y, w], i) => <rect x={x} y={y} width={w} height="14" pathLength="1" stroke="currentColor" stroke-width="2.6" style={`--i:${i}`} />)}
+    </svg>
+    <p class="intro-nome">EDIL<em>BRUNO</em></p>
+    <p class="intro-sotto">{site.attivita} · {site.indirizzo.citta}</p>
+  </div>
+</div>
+<script is:inline>
+(function () {
+  var html = document.documentElement, intro = document.querySelector('.intro');
+  if (!intro || !html.classList.contains('intro-on')) return;
+  var fine = function () { html.classList.remove('intro-on'); };
+  intro.addEventListener('animationend', function (e) { if (e.target === intro) fine(); });
+  setTimeout(fine, 4500);
+})();
+</script>

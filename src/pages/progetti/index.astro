@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Portfolio from '../../components/Portfolio.astro';
+import Cta from '../../components/Cta.astro';
+import { abs } from '../../data/site';
+import { ex } from '../../lib/bozza';
+import { progetti } from '../../data/progetti';
+
+// Pagina "Lavori" (rotta /progetti/ della base).
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Lavori', href: '/progetti/' }];
+const ld = [{
+  '@type': 'ItemList',
+  name: 'Lavori',
+  numberOfItems: progetti.length,
+  itemListElement: progetti.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/progetti/${p.slug}/`), name: p.titolo })),
+}];
+---
+<Layout title="Lavori | EDILBRUNO, impresa edile a Gallarate" description={ex('Lavori di EDILBRUNO a Gallarate e dintorni: ristrutturazioni, pavimenti e rivestimenti, muratura e completamenti.')} pageType="CollectionPage" crumbs={crumbs} ld={ld}>
+<PageHead crumbs={crumbs} eyebrow="Lavori" title="I nostri lavori"> <p class="lead mt-3 narrow">{ex('Ristrutturazioni, pavimenti e murature tra Gallarate, Busto Arsizio e i comuni vicini.')}</p> </PageHead>
+<Portfolio lista={progetti} />
+<Cta />
+</Layout>

@@ -1,0 +1,7 @@
+---
+/** Testata chiara su fondo sabbia (portfolio, contatti, pagine legali). */
+import Breadcrumb, { type Crumb } from './Breadcrumb.astro';
+interface Props { crumbs: Crumb[]; eyebrow?: string; title: string; titleStyle?: string }
+const { crumbs, eyebrow, title, titleStyle } = Astro.props;
+---
+<section class="page-head bg-sand"> <div class="container"> <Breadcrumb items={crumbs} /> {eyebrow && <p class="eyebrow mb-2">{eyebrow}</p>} <h1 class="h1-page" style={titleStyle}>{title}</h1> <slot /> </div> </section>

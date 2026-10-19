@@ -1,0 +1,9 @@
+---
+/** Testata con foto a tutta larghezza (impresa, servizi, scheda lavoro). Header trasparente sopra. */
+import Picture from './Picture.astro';
+import Breadcrumb, { type Crumb } from './Breadcrumb.astro';
+import type { Img } from '../lib/media';
+interface Props { img: Img; crumbs: Crumb[]; eyebrow: string }
+const { img, crumbs, eyebrow } = Astro.props;
+---
+<section class="page-hero"> <Picture img={img} eager /> <div class="container inner"> <Breadcrumb items={crumbs} /> <p class="eyebrow-light mb-2">{eyebrow}</p> <slot /> </div> </section>

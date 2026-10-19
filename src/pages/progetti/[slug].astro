@@ -1,0 +1,88 @@
+---
+/**
+ * Pagine dei lavori (portfolio): una per categoria (/progetti/<slug-categoria>/) e una per
+ * progetto (/progetti/<slug-progetto>/). Stesso parametro, due template.
+ */
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import PageHero from '../../components/PageHero.astro';
+import Portfolio from '../../components/Portfolio.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Picture from '../../components/Picture.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import Cta from '../../components/Cta.astro';
+import { site, abs } from '../../data/site';
+import { membro } from '../../data/team';
+import { categorie, categoria, copertina, inCategoria, progetti, type Categoria, type Progetto } from '../../data/progetti';
+import { fullSrc, galleryClass, smallSrc } from '../../lib/media';
+
+export function getStaticPaths() {
+  return [
+    ...categorie.map((c) => ({ params: { slug: c.slug }, props: { cat: c, prog: undefined } })),
+    ...progetti.map((p) => ({ params: { slug: p.slug }, props: { cat: undefined, prog: p } })),
+  ];
+}
+
+const { cat, prog } = Astro.props as { cat?: Categoria; prog?: Progetto };
+
+// ── Pagina categoria ──
+const lista = cat ? inCategoria(cat.id) : [];
+const catCrumbs = cat
+  ? [{ name: 'Home', href: '/' }, { name: 'Lavori', href: '/progetti/' }, { name: cat.nome, href: `/progetti/${cat.slug}/` }]
+  : [];
+const catLd = cat
+  ? [{
+      '@type': 'ItemList',
+      name: cat.nome,
+      numberOfItems: lista.length,
+      itemListElement: lista.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/progetti/${p.slug}/`), name: p.titolo })),
+    }]
+  : [];
+
+// ── Pagina progetto ──
+const p = prog ?? progetti[0];
+const pc = categoria(p.categoria);
+// copertina-disegno: testata chiara senza foto e disegno in testa alla colonna (come nel sorgente)
+const disegno = !!copertina(p).drawing;
+const ref = membro(p.referente);
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Lavori', href: '/progetti/' }, { name: pc.nome, href: `/progetti/${pc.slug}/` }, { name: p.titolo, href: `/progetti/${p.slug}/` }];
+const idx = progetti.indexOf(p);
+const prev = progetti[(idx - 1 + progetti.length) % progetti.length];
+const next = progetti[(idx + 1) % progetti.length];
+const simili = inCategoria(p.categoria).filter((x) => x !== p).slice(0, 3);
+const testo = p.paragrafi.join(' ');
+const desc = `${p.titolo}, ${p.luogo}: ${testo.length > 140 ? testo.slice(0, 140) + '…' : testo}`;
+const projLd = [{
+  '@type': 'CreativeWork',
+  '@id': abs(`/progetti/${p.slug}/#progetto`),
+  name: p.titolo,
+  alternativeHeadline: p.intervento,
+  description: testo,
+  url: abs(`/progetti/${p.slug}/`),
+  inLanguage: 'it',
+  genre: p.categorie.map((c) => categoria(c).nome),
+  keywords: [...p.temi, p.luogo, site.nome].join(', '),
+  image: p.immagini.map((im) => ({ '@type': 'ImageObject', contentUrl: abs(im.src), caption: im.alt })),
+  locationCreated: { '@type': 'Place', name: p.luogo },
+  creator: { '@id': abs('/#organizzazione') },
+}];
+---
+{cat && (
+<Layout title={cat.title} description={cat.description} pageType="CollectionPage" crumbs={catCrumbs} ld={catLd}>
+<PageHead crumbs={catCrumbs} eyebrow="Lavori" title={cat.nome}> <p class="lead mt-3 narrow">{cat.intro}</p> </PageHead>
+<Portfolio corrente={cat} lista={lista} />
+<Cta />
+</Layout>
+)}
+{prog && (
+<Layout title={`${p.titolo} – ${p.luogo} | ${site.nome}`} description={desc} pageType="ItemPage" ogType="article" transparent={!disegno} crumbs={crumbs} ld={projLd}>
+{disegno
+  ? <PageHead crumbs={crumbs} eyebrow={pc.nome} title={p.titolo} titleStyle="max-width: 24ch"> <p class="lead mt-2">{p.luogo}</p> </PageHead>
+  : <PageHero img={copertina(p)} crumbs={crumbs} eyebrow={pc.nome}> <h1 class="h1-page">{p.titolo}</h1> <p class="lead">{p.luogo}</p> </PageHero>}
+<article class="section"> <div class="container project-layout"> <aside class="facts" aria-label="Dati del lavoro"> <dl> <div class="row"><dt>Tipo</dt><dd>{p.intervento}</dd></div> <div class="row"><dt>Luogo</dt><dd>{p.luogo}</dd></div> <div class="row"> <dt>Categoria</dt> <dd><a href={`/progetti/${pc.slug}/`} class="link-underline">{pc.nome}</a></dd> </div> {p.progettisti && <div class="row"><dt>Con</dt><dd><ul>{p.progettisti.map((x) => <li>{x}</li>)}</ul></dd></div>} {p.importo && <div class="row"><dt>Importo lavori</dt><dd>{p.importo}</dd></div>} <div class="row"><dt>Anno e tipo</dt><dd><ul class="tags" style="margin-top:0">{p.temi.map((t) => <li>{t}</li>)}</ul></dd></div> {ref && <div class="row"> <dt>Referente</dt> <dd> <a href={`/studio/#${ref.id}`} class="lead-person"> <img src={smallSrc(ref.foto)} alt="" width="52" height="52" loading="lazy"> <span><strong style="font-weight:500">{ref.nome}</strong><br><span class="muted small">{ref.ruolo}</span></span> </a> </dd> </div>} </dl> <a href="/contatti/#richiesta" class="btn btn-primary mt-4" style="width:100%">Parlaci del tuo lavoro</a> </aside> <div> {disegno && <figure class="mb-3"> <Picture img={copertina(p)} sizes="(min-width: 1024px) 60vw, 92vw" eager class="full-img" /> <figcaption class="xs muted mt-1">{copertina(p).alt}</figcaption> </figure>} {site.bozza && p.esempio && <p class="draft-note mb-3">Lavoro d’esempio: titolo, luogo, testi e foto sono inventati per mostrare la pagina. Vanno sostituiti con un lavoro vero di {site.nome}.</p>} <h2 class="h3 mb-3">Il lavoro</h2> <div class="prose lead" style="font-size: 1.1rem"> {p.paragrafi.map((t) => <p>{t}</p>)} </div> <div class="gallery" data-gallery> {p.immagini.map((im, k) => { const cls = galleryClass(im); return <figure class={cls || undefined} style={k === 0 && cls === '' ? 'display:none' : undefined}> <button type="button" data-index={k} data-full={fullSrc(im)} data-alt={im.alt} aria-label={`Ingrandisci: ${im.alt}`}> <Picture img={im} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw" /> </button> <figcaption>{im.alt}</figcaption> </figure>; })} </div> {!disegno && <button type="button" class="text-link link-underline mt-3" data-open-all>Vedi tutte le {p.immagini.length} immagini</button>} </div> </div> </article>
+<nav class="container" aria-label="Altri lavori"> <div class="pager"> <a href={`/progetti/${prev.slug}/`} rel="prev"><small>← Lavoro precedente</small><span>{prev.titolo}</span></a> <a href={`/progetti/${next.slug}/`} rel="next"><small>Lavoro successivo →</small><span>{next.titolo}</span></a> </div> </nav>
+<section class="section"> <div class="container"> <div class="section-head"> <div> <p class="eyebrow">Lavori simili</p> <h2 class="h2">Potrebbero interessarti</h2> </div> <a href={`/progetti/${pc.slug}/`} class="text-link link-underline">{pc.nome}</a> </div> <div class="projects-grid">{simili.map((s) => <ProjectCard p={s} />)}</div> </div> </section>
+<Cta />
+<Lightbox />
+</Layout>
+)}

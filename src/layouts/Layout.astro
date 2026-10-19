@@ -1,0 +1,188 @@
+---
+/**
+ * Layout unico: <head> SEO (meta, Open Graph, Twitter, geo, JSON-LD @graph), header,
+ * footer e lo script condiviso (header che diventa pieno, menu mobile, reveal con
+ * IntersectionObserver) ripreso alla lettera dal sito sorgente.
+ */
+import '@fontsource-variable/inter';
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Intro from '../components/Intro.astro';
+import { site, abs } from '../data/site';
+import { pulito, EVIDENZIA } from '../lib/bozza';
+import { team } from '../data/team';
+import { servizi } from '../data/servizi';
+import type { Crumb } from '../components/Breadcrumb.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** tipo schema.org della pagina */
+  pageType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'ItemPage';
+  ogType?: 'website' | 'article';
+  /** percorso dell'immagine Open Graph (1200x630) */
+  ogImage?: string;
+  noindex?: boolean;
+  transparent?: boolean;
+  crumbs?: Crumb[];
+  /** nodi JSON-LD aggiuntivi della pagina */
+  ld?: Record<string, unknown>[];
+}
+
+const {
+  title: titleRaw,
+  description: descriptionRaw,
+  pageType = 'WebPage',
+  ogType = 'website',
+  ogImage = '/img/og/og-default.png',
+  noindex = false,
+  transparent = false,
+  crumbs,
+  ld = [],
+} = Astro.props;
+
+const title = pulito(titleRaw);
+const description = pulito(descriptionRaw);
+const url = abs(Astro.url.pathname);
+const og = abs(ogImage);
+const ORG = abs('/#organizzazione');
+const geo = site.geo;
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': ['ProfessionalService', 'LocalBusiness'],
+    '@id': ORG,
+    name: site.nome,
+    ...(site.ragioneSociale ? { legalName: site.ragioneSociale } : {}),
+    alternateName: site.nomiAlternativi,
+    description: site.descrizione,
+    slogan: site.slogan,
+    url: abs('/'),
+    logo: { '@type': 'ImageObject', url: abs('/img/logo/logo.svg'), caption: `Logo ${site.nome}` },
+    email: site.email,
+    ...(site.telefonoE164 ? { telephone: site.telefonoE164 } : {}),
+    address: [
+      {
+        '@type': 'PostalAddress',
+        streetAddress: site.indirizzo.via,
+        postalCode: site.indirizzo.cap,
+        addressLocality: site.indirizzo.citta,
+        addressRegion: site.indirizzo.provincia,
+        addressCountry: site.indirizzo.paese,
+      },
+    ],
+    ...(geo ? { geo: { '@type': 'GeoCoordinates', latitude: geo.lat, longitude: geo.lng } } : {}),
+    hasMap: site.mapsUrl,
+    areaServed: site.areeServite.map((a) => ({ '@type': a.tipo, name: a.nome })),
+    knowsAbout: site.competenze,
+    sameAs: site.social.map((s) => s.url),
+    employee: team.map((m) => ({
+      '@type': 'Person',
+      '@id': abs(`/studio/#${m.id}`),
+      name: m.nome,
+      jobTitle: m.ruolo,
+      // foto vuota (alt vuoto) = nessuna immagine nel JSON-LD
+      ...(m.foto.alt ? { image: abs(m.foto.src) } : {}),
+      worksFor: { '@id': ORG },
+    })),
+    numberOfEmployees: { '@type': 'QuantitativeValue', value: team.length },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Servizi di ${site.nome}`,
+      itemListElement: servizi.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.nome, description: s.breve, url: abs(`/servizi/#${s.id}`) },
+      })),
+    },
+  },
+  { '@type': 'WebSite', '@id': abs('/#sito'), url: abs('/'), name: site.nome, inLanguage: 'it', publisher: { '@id': ORG } },
+  {
+    '@type': pageType,
+    '@id': `${url}#pagina`,
+    url,
+    name: title,
+    description,
+    inLanguage: 'it',
+    isPartOf: { '@id': abs('/#sito') },
+    about: { '@id': ORG },
+    primaryImageOfPage: { '@type': 'ImageObject', url: og },
+    ...(crumbs ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
+  },
+  ...(crumbs
+    ? [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${url}#breadcrumb`,
+          itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: abs(c.href) })),
+        },
+      ]
+    : []),
+  ...ld,
+];
+const jsonld = pulito(JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }));
+---
+<!DOCTYPE html>
+<html lang="it" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={url}>
+<meta name="robots" content={noindex || site.bozza ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}>
+<meta name="theme-color" content={site.themeColor}>
+<meta name="author" content={site.nome}>
+<meta name="geo.region" content={site.geoRegion}>
+<meta name="geo.placename" content={site.indirizzo.citta}>
+{geo && <meta name="geo.position" content={`${geo.lat};${geo.lng}`}>}
+{geo && <meta name="ICBM" content={`${geo.lat}, ${geo.lng}`}>}
+<meta property="og:type" content={ogType}>
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content={site.nome}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={url}>
+<meta property="og:image" content={og}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content={`${site.nome} — ${site.attivita}`}>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={og}>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="sitemap" href="/sitemap-index.xml">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<script type="application/ld+json" set:html={jsonld} />
+<script is:inline>document.documentElement.classList.remove('no-js');
+// Intro col logo: solo alla prima pagina della visita
+try { if (!sessionStorage.getItem('intro-vista')) { document.documentElement.classList.add('intro-on'); sessionStorage.setItem('intro-vista', '1'); } } catch (e) {}</script>
+</head>
+<body>
+<Intro />
+<a href="#main" class="skip-link">Vai al contenuto</a>
+<Header transparent={transparent} />
+<main id="main">
+<slot />
+</main>
+<Footer />
+{site.bozza && <div class="draft-badge" role="note"><p>{site.bozzaTesto}</p><button type="button" class="draft-toggle" data-toggle-esempi aria-pressed="false">Mostra testi inventati</button></div>}
+{site.bozza && <script is:inline define:vars={{ iniziale: EVIDENZIA }}>
+// Bozza: marca i testi inventati (ex() → carattere invisibile U+2063) e il pulsante dell'etichetta
+// accende/spegne la sottolineatura gialla (classe mostra-esempi su <html>, scelta salvata nel browser).
+(function(){var S='\u2063',w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n,l=[];while(n=w.nextNode())if(n.nodeValue.indexOf(S)>-1)l.push(n);l.forEach(function(t){t.nodeValue=t.nodeValue.split(S).join('');t.parentElement&&t.parentElement.classList.add('esempio')});
+var K='edilbruno-esempi',on=iniziale;try{var v=localStorage.getItem(K);if(v!==null)on=v==='1'}catch(e){}
+var b=document.querySelector('[data-toggle-esempi]');function set(x){on=x;document.documentElement.classList.toggle('mostra-esempi',x);if(b){b.setAttribute('aria-pressed',String(x));b.textContent=x?'Nascondi testi inventati':'Mostra testi inventati'}try{localStorage.setItem(K,x?'1':'0')}catch(e){}}
+set(on);b&&b.addEventListener('click',function(){set(!on)})})();
+</script>}
+<script>
+var e=document.querySelector(`.site-header`);if(e){let t=e.dataset.transparent===`true`,n=()=>{let n=!t||window.scrollY>40;e.classList.toggle(`is-solid`,n),e.classList.toggle(`is-transparent`,!n)};n(),window.addEventListener(`scroll`,n,{passive:!0})}var t=document.querySelector(`.menu-toggle`),n=document.getElementById(`mobile-menu`);if(t&&n){let e=e=>{t.setAttribute(`aria-expanded`,String(e)),t.setAttribute(`aria-label`,e?`Chiudi il menu`:`Apri il menu`),n.hidden=!e,document.body.classList.toggle(`menu-open`,e),document.body.style.overflow=e?`hidden`:``};t.addEventListener(`click`,()=>e(n.hidden)),n.querySelectorAll(`a`).forEach(t=>t.addEventListener(`click`,()=>e(!1))),document.addEventListener(`keydown`,t=>{t.key===`Escape`&&!n.hidden&&e(!1)})}var r=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`is-in`),r.unobserve(e.target))}),{rootMargin:`0px 0px -8% 0px`});document.querySelectorAll(`.reveal`).forEach(e=>r.observe(e));
+</script>
+</body>
+</html>

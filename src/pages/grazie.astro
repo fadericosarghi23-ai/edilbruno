@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+<Layout title={`Messaggio inviato | ${site.nome}`} description="Il tuo messaggio è stato inviato: ti ricontatteremo a breve." noindex>
+<section class="page-head bg-sand" style="min-height: 70svh"> <div class="container narrow"> <p class="eyebrow mb-2">Grazie</p> <h1 class="h1-page">Abbiamo ricevuto il tuo messaggio</h1> <p class="lead mt-3">Ti ricontatteremo al più presto. Intanto puoi dare un’occhiata ai nostri lavori.</p> <div class="btn-row mt-4"> <a href="/progetti/" class="btn btn-primary">Guarda i lavori</a> <a href="/" class="btn btn-outline">Torna alla home</a> </div> </div> </section>
+</Layout>

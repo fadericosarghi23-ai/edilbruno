@@ -1,0 +1,8 @@
+---
+/** Filtri per categoria (link alle pagine categoria) + griglia progetti. Le prime 3 card caricano subito. */
+import ProjectCard from './ProjectCard.astro';
+import { categorie, inCategoria, progetti, type Categoria, type Progetto } from '../data/progetti';
+interface Props { corrente?: Categoria; lista: Progetto[] }
+const { corrente, lista } = Astro.props;
+---
+<section class="section-sm"> <div class="container"> <nav class="filters" aria-label="Filtra per categoria"> <a href="/progetti/" aria-current={corrente ? undefined : 'page'}>Tutti<sup>{progetti.length}</sup></a>{categorie.map((c) => <a href={`/progetti/${c.slug}/`} aria-current={corrente?.id === c.id ? 'page' : undefined}>{c.nome}<sup>{inCategoria(c.id).length}</sup></a>)} </nav> <div class="projects-grid"> {lista.map((p, i) => <ProjectCard p={p} h="h2" eager={i < 3} />)} </div> </div> </section>

@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Picture from '../components/Picture.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import Cta from '../components/Cta.astro';
+import { site } from '../data/site';
+import { ex } from '../lib/bozza';
+import { servizi } from '../data/servizi';
+import { team } from '../data/team';
+import { progetti, progetto } from '../data/progetti';
+import { heroSlides, progettiHome, numeriHome } from '../data/contenuti';
+
+const title = 'EDILBRUNO | Impresa edile a Gallarate (VA)';
+const description = site.descrizione;
+const fotoStudio = progetto('muratura-gallarate').immagini[1];
+// EDILBRUNO: tolte le sezioni premi e "dove lavoriamo" (aree). Nessuna FAQ.
+---
+<Layout title={title} description={description} transparent>
+<section class="hero" aria-label="Lavori in evidenza"> <div class="hero-slides" data-hero> {heroSlides.map((s, i) => <figure class:list={['hero-slide', { 'is-active': i === 0 }]} data-title={s.titolo} data-location={s.luogo} data-href={s.href}> <Picture img={s.img} eager={i === 0} class="full-img" /> </figure>)} </div> <div class="container hero-content"> <p class="eyebrow-light mb-3">{site.nome} · {site.attivita} · {site.indirizzo.citta} ({site.indirizzo.provincia})</p> <h1 class="h1">{ex('Ristrutturazioni e muratura')} <em>{ex('a Gallarate e dintorni')}</em></h1> <div class="hero-meta"> <div> <p class="lead">{ex('Piccole ristrutturazioni, muratura e posa di pavimenti per case e locali: un solo referente, preventivi scritti e cantieri lasciati puliti.')}</p> <div class="btn-row"> <a href="/progetti/" class="btn btn-primary">Guarda i lavori</a> <a href="/contatti/#richiesta" class="btn btn-outline-light">Contattaci</a> </div> </div> <div class="hero-caption" aria-live="polite"> <span class="label">Nella foto</span> <a href={heroSlides[0].href} class="link-underline" data-hero-caption>{heroSlides[0].titolo} · {heroSlides[0].luogo}</a> <div class="hero-dots" role="group" aria-label="Scegli l’immagine"> {heroSlides.map((s, i) => <button type="button" aria-label={`Mostra ${s.titolo}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>)} </div> </div> </div> </div> </section>
+
+<section class="section"> <div class="container split"> <div class="reveal"> <div class="ratio-45"> <Picture img={fotoStudio} sizes="(min-width: 1024px) 38vw, 92vw" /> </div> </div> <div class="reveal"> <p class="eyebrow mb-2">L’impresa</p> <h2 class="h2">{ex('Un’impresa piccola, un referente solo')}</h2> <div class="prose mt-3 lead"> <p>{ex('Ogni lavoro parte da un sopralluogo e da un preventivo scritto, con tempi e costi chiari.')}</p> {/* [[DA VALIDARE: frase composta solo con i dati verificati del mapping]] */} <p>Impresa individuale di Bruno Onofrio Michael a Gallarate (VA): piccole ristrutturazioni, lavori di muratura, posa di piastrelle e pavimentazioni interne, lavori di completamento.</p> </div> <div class="stats mt-4"> {numeriHome.map((s) => <div class="stat"><strong>{s.n}</strong><span>{s.label}</span></div>)} </div> <a href="/studio/" class="btn btn-outline mt-4">Scopri l’impresa</a> </div> </div> </section>
+
+<section class="section bg-sand"> <div class="container"> <div class="section-head reveal"> <div> <p class="eyebrow mb-2">Servizi</p> <h2 class="h2">{ex('Dalla muratura alle finiture')}</h2> <p class="lead mt-2">{ex('I lavori che facciamo ogni giorno, in casa e fuori.')}</p> </div> <a href="/servizi/" class="btn btn-outline">Tutti i servizi</a> </div> <ul class="services services-3 reveal"> {servizi.map((s) => <li class="service"> <Icon name={s.icona} class="icon" /> <h3 class="h4"><a href={`/servizi/#${s.id}`} class="link-underline">{s.nome}</a></h3> <p>{s.breve}</p> </li>)} </ul> </div> </section>
+
+<section class="section"> <div class="container"> <div class="section-head reveal"> <div> <p class="eyebrow">Lavori</p> <h2 class="h2">{ex('Alcuni lavori recenti')}</h2> </div> <a href="/progetti/" class="text-link link-underline">Tutti i {progetti.length} lavori</a> </div> <div class="projects-grid"> {progettiHome.map((slug) => <ProjectCard p={progetto(slug)} />)} </div> </div> </section>
+
+<section class="section"> <div class="container"> <div class="section-head reveal"> <div> <p class="eyebrow">Il titolare</p> <h2 class="h2">{team[0].nome}</h2> <p class="lead mt-2">Titolare di EDILBRUNO, impresa individuale con sede a Gallarate (VA).</p> </div> <a href="/studio/#team" class="text-link link-underline">Conosci l’impresa</a> </div> <div class="team-strip reveal"> {team.slice(0, 7).map((m) => <a href={`/studio/#${m.id}`} title={`${m.nome}, ${m.ruolo}`}> <Picture img={m.foto} sizes="(min-width: 768px) 14vw, 33vw" /> </a>)} </div> </div> </section>
+
+
+<section class="section"> <div class="container grid-2"> <div class="reveal"> <p class="eyebrow mb-2">Dove siamo</p> <h2 class="h2">{site.nome} a {site.indirizzo.citta}</h2> <p class="lead mt-3">{ex('Lavoriamo a Gallarate e nei comuni vicini. Chiamaci per fissare un sopralluogo.')}</p> <div class="contact-cards mt-4"> <div class="contact-card"> <h3>{site.indirizzo.citta}</h3> <p>{site.indirizzo.via}<br>{site.indirizzo.cap} {site.indirizzo.citta} ({site.indirizzo.provincia}), {site.indirizzo.paeseNome}</p> <a href={site.mapsUrl} target="_blank" rel="noopener" class="text-link link-underline mt-1" style="display:inline-block">Apri in Google Maps</a> </div> <div class="contact-card"> <h3>Contatti</h3> {site.telefono && <p><a href={`tel:${site.telefonoE164}`}>{site.telefono}</a></p>} <p><a href={`mailto:${site.email}`}>{site.email}</a></p> </div> </div> </div> <div class="map reveal"> <MapEmbed span={0.012} /> </div> </div> </section>
+<Cta />
+<script>
+var e=document.querySelector(`[data-hero]`);if(e){let t=[...e.querySelectorAll(`.hero-slide`)],n=[...document.querySelectorAll(`[data-dot]`)],r=document.querySelector(`[data-hero-caption]`),i=window.matchMedia(`(prefers-reduced-motion: reduce)`).matches,a=0,o,s=e=>{t[a].classList.remove(`is-active`),n[a].setAttribute(`aria-current`,`false`),a=(e+t.length)%t.length;let i=t[a];i.querySelectorAll(`img`).forEach(e=>e.setAttribute(`loading`,`eager`)),i.classList.add(`is-active`),n[a].setAttribute(`aria-current`,`true`),r&&(r.textContent=`${i.dataset.title} · ${i.dataset.location}`,r.href=i.dataset.href||`#`)},c=()=>{i||(o=window.setInterval(()=>s(a+1),6e3))};n.forEach((e,t)=>e.addEventListener(`click`,()=>{window.clearInterval(o),s(t),c()})),window.addEventListener(`load`,()=>t.forEach(e=>e.querySelectorAll(`img`).forEach(e=>e.setAttribute(`loading`,`eager`)))),c()}
+</script>
+</Layout>

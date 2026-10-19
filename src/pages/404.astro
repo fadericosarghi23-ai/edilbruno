@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+<Layout title={`Pagina non trovata | ${site.nome}`} description="La pagina che cerchi non esiste o è stata spostata." noindex>
+<section class="page-head bg-sand" style="min-height: 70svh"> <div class="container narrow"> <p class="eyebrow mb-2">Errore 404</p> <h1 class="h1-page">Questa pagina non esiste</h1> <p class="lead mt-3">La pagina che cerchi è stata spostata o non è mai esistita. Puoi ripartire dalla home o dai lavori.</p> <div class="btn-row mt-4"> <a href="/" class="btn btn-primary">Vai alla home</a> <a href="/progetti/" class="btn btn-outline">Lavori</a> <a href="/contatti/" class="btn btn-outline">Contatti</a> </div> </div> </section>
+</Layout>

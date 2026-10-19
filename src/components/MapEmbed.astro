@@ -1,0 +1,17 @@
+---
+/**
+ * Mappa OpenStreetMap (iframe lazy). Finché site.geo è null mostra un segnaposto
+ * delle stesse dimensioni del riquadro: nessuna chiamata esterna.
+ * span = semiampiezza del riquadro in gradi (home 0.012, contatti 0.01 come il sorgente).
+ */
+import { site } from '../data/site';
+interface Props { span?: number }
+const { span = 0.012 } = Astro.props;
+const g = site.geo;
+const src = g
+  ? `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(`${g.lng - span},${g.lat - span / 2},${g.lng + span},${g.lat + span / 2}`)}&layer=mapnik&marker=${encodeURIComponent(`${g.lat},${g.lng}`)}`
+  : '/img/placeholder/mappa.svg';
+---
+{g
+  ? <iframe title={`Mappa: ${site.nome}, ${site.indirizzo.via}, ${site.indirizzo.citta}`} loading="lazy" referrerpolicy="no-referrer" src={src}></iframe>
+  : <iframe title="Mappa della sede" loading="lazy" src={src}></iframe>}

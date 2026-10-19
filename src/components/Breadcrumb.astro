@@ -1,0 +1,8 @@
+---
+/** Briciole di pane: l'ultima voce è la pagina corrente. */
+export type Crumb = { name: string; href: string };
+interface Props { items: Crumb[] }
+const { items } = Astro.props;
+const last = items.length - 1;
+---
+<nav aria-label="Percorso"> <ol class="breadcrumb"> {items.map((c, i) => i < last ? <li><a href={c.href}>{c.name}</a></li> : <li><span aria-current="page">{c.name}</span></li>)} </ol> </nav>

@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Picture from '../components/Picture.astro';
+import Icon from '../components/Icon.astro';
+import Cta from '../components/Cta.astro';
+import { site, abs } from '../data/site';
+import { ex } from '../lib/bozza';
+import { servizi } from '../data/servizi';
+import { progetto, categoria, copertina } from '../data/progetti';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Servizi', href: '/servizi/' }];
+const hero = progetto('cucina-cardano').immagini[0];
+const ld = servizi.map((s) => ({
+  '@type': 'Service',
+  '@id': abs(`/servizi/#${s.id}`),
+  name: s.nome,
+  serviceType: s.nome,
+  description: [s.breve, ...s.paragrafi].join(' '),
+  provider: { '@id': abs('/#organizzazione') },
+  areaServed: site.areeServite.filter((a) => a.tipo !== 'AdministrativeArea').map((a) => ({ '@type': a.tipo, name: a.nome })),
+  url: abs(`/servizi/#${s.id}`),
+}));
+---
+<Layout title="Servizi | EDILBRUNO, impresa edile a Gallarate" description="Piccole ristrutturazioni, lavori di muratura, posa di piastrelle e pavimentazioni interne, lavori di completamento: i servizi di EDILBRUNO a Gallarate (VA)." ogType="article" transparent crumbs={crumbs} ld={ld}>
+<PageHero img={hero} crumbs={crumbs} eyebrow="Servizi"> <h1 class="h1-page">{ex('Cosa facciamo, in casa e fuori')}</h1> <p class="lead">{ex('Sei tipi di lavoro, dalla muratura alle finiture.')}</p> </PageHero>
+<nav class="bg-sand" aria-label="Indice dei servizi"> <div class="container" style="padding-block: 1.25rem"> <ul class="filters" style="margin:0"> {servizi.map((s) => <li><a href={`#${s.id}`}>{s.nome}</a></li>)} </ul> </div> </nav>
+{servizi.map((s, i) => {
+  const rev = i % 2 === 1;
+  const fp = progetto(s.foto);
+  const cat = categoria(s.categoria);
+  return (
+<section id={s.id} class:list={['section', { 'bg-sand': rev }]}> <div class:list={['container split', { 'split-rev': rev }]}> <div class="reveal" style={rev ? 'order: 2' : undefined}> <a href={`/progetti/${fp.slug}/`} class="card"> <div class="media" style="aspect-ratio: 4/5"> <Picture img={copertina(fp)} sizes="(min-width: 1024px) 38vw, 92vw" /> </div> <p class="loc mt-1">Nella foto: {fp.titolo}, {fp.luogo}</p> </a> </div> <div class="reveal"> <Icon name={s.icona} class="service-icon" /> <p class="eyebrow mt-3 mb-2">Servizio {String(i + 1).padStart(2, '0')}</p> <h2 class="h2">{s.nome}</h2> <div class="prose mt-3">{s.paragrafi.map((p) => <p>{p}</p>)}</div> <ul class="checklist mt-4">{s.punti.map((p) => <li>{p}</li>)}</ul> <div class="mt-4"> <p class="xs muted" style="text-transform:uppercase; letter-spacing:.16em; font-weight:600">Lavori collegati</p> <ul class="mt-1" style="display:grid; gap:.35rem"> {s.correlati.map((slug) => { const p = progetto(slug); return <li><a href={`/progetti/${p.slug}/`} class="link-underline" style="color:var(--ink)">{p.titolo}</a> <span class="muted small">— {p.luogo}</span></li>; })} </ul> <a href={`/progetti/${cat.slug}/`} class="text-link link-underline mt-3" style="display:inline-block">Vedi {cat.nome}</a> </div> </div> </div> </section>
+  );
+})}
+<Cta />
+</Layout>
