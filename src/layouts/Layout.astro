@@ -85,8 +85,8 @@ const graph: Record<string, unknown>[] = [
       '@id': abs(`/studio/#${m.id}`),
       name: m.nome,
       jobTitle: m.ruolo,
-      // foto vuota (alt vuoto) = nessuna immagine nel JSON-LD
-      ...(m.foto.alt ? { image: abs(m.foto.src) } : {}),
+      // foto segnaposto = nessuna immagine nel JSON-LD
+      ...(m.fotoSegnaposto ? {} : { image: abs(m.foto.src) }),
       worksFor: { '@id': ORG },
     })),
     numberOfEmployees: { '@type': 'QuantitativeValue', value: team.length },

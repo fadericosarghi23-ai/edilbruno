@@ -59,7 +59,7 @@ raggio d’azione, i valori, la frase di descrizione composta con i dati veri.
 
 - **Foto**: 34 da Unsplash (licenza Unsplash, uso libero anche commerciale), elenco degli id in
   `scripts/foto-unsplash.mjs` e in `src/data/immagini.json`. **Non sono lavori di EDILBRUNO.**
-  Alt "Foto d’esempio". Nessuna foto per il titolare: riquadro vuoto (`public/img/team/titolare-vuota.svg`).
+  Alt "Foto d’esempio". Nessuna foto per il titolare: segnaposto "Foto del titolare · in arrivo" (`public/img/team/titolare-segnaposto.svg`).
 - **Logo e icone provvisori** (`scripts/marchio.mjs`): mattoni a tratto + "EDILBRUNO". Immagine OG con foto d’esempio.
 - **Palette provvisoria** (`src/styles/global.css`): neutri caldi + rosso mattone `#8a3a1f` (contrasti nel commento).
 
@@ -67,7 +67,7 @@ raggio d’azione, i valori, la frase di descrizione composta con i dati veri.
 
 Del titolare il sito dice solo quello che c’è nel mapping: nome, ruolo (titolare), impresa individuale con sede
 a Gallarate. Nessuna bio, nessun anno di esperienza, nessuna frase su cosa fa di persona: vanno scritti con lui
-(campo `bio` in `src/data/team.ts`, numeri in `src/data/contenuti.ts`). Al posto del ritratto c’è un riquadro vuoto delle stesse misure.
+(campo `bio` in `src/data/team.ts`, numeri in `src/data/contenuti.ts`). Al posto del ritratto c’è un segnaposto "Foto del titolare · in arrivo" delle stesse misure.
 
 ## Finti di proposito (non si inventano recapiti reali)
 

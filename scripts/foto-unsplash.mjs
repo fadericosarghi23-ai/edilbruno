@@ -23,7 +23,7 @@ const FOTO = {
   'intonaci-castellanza': ['1768839725085-829e6ac7ac26', '1733431772808-82d878e59000', '1639430257115-f63af9eab97d', '1541323429887-2e393b8db71c'],
   'cartongesso-busto': ['1768321914149-5a6428ec2f82', '1768321916886-30dc323bddf7', '1770838773417-08b18661c62f', '1599619585752-c3edb42a414c'],
 };
-// Nessuna foto per il titolare: nel sito c'è un riquadro vuoto (public/img/team/titolare-vuota.svg).
+// Nessuna foto per il titolare: nel sito c'è un segnaposto "Foto del titolare · in arrivo" (public/img/team/titolare-segnaposto.svg).
 
 /** misure di un JPEG leggendo il marcatore SOF */
 function jpegSize(buf) {

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="3020" viewBox="0 0 2000 3020">
+<!-- Segnaposto della foto del titolare: sagoma generica (nessun volto), stesse misure del riquadro. Sostituire con la foto vera. -->
+<rect width="2000" height="3020" fill="#ebe6df"/>
+<rect x="90" y="90" width="1820" height="2840" fill="none" stroke="#c9bfb2" stroke-width="8" stroke-dasharray="40 28"/>
+<g fill="none" stroke="#8a3a1f" stroke-width="22" stroke-linecap="round">
+<circle cx="1000" cy="1040" r="250"/>
+<path d="M500 1780c0-300 230-430 500-430s500 130 500 430"/>
+</g>
+<g font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" text-anchor="middle">
+<text x="1000" y="2170" font-size="118" font-weight="700" letter-spacing="18" fill="#5f5a54">FOTO DEL TITOLARE</text>
+<text x="1000" y="2350" font-size="104" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#8a3a1f">in arrivo</text>
+</g>
+</svg>

@@ -156,7 +156,7 @@ PALETTE = [
     ("--text", "#262320", "Testo corrente", contrasto("#262320", B) + " su bianco"),
     ("--grey", "#5f5a54", "Testo secondario, didascalie", contrasto("#5f5a54", B) + " su bianco"),
     ("--sand", "#f6f2ec", "Sezioni chiare alternate", "fondo neutro caldo"),
-    ("--grey-light", "#ebe6df", "Fondo foto, riquadro vuoto del titolare", "derivato"),
+    ("--grey-light", "#ebe6df", "Fondo foto e del segnaposto del titolare", "derivato"),
     ("--accent-soft", "#f2e3da", "Anello di focus nei campi", "derivato dall'accento"),
     ("--line", "#0000001a", "Righe divisorie", "nero al 10%"),
     ("--white", "#ffffff", "Fondo pagina", "bianco"),
@@ -207,7 +207,7 @@ ERRORI = [
      "Bio, anni di mestiere, \"segue ogni cantiere di persona\": tolti. Del titolare restano solo nome, ruolo e "
      "impresa individuale a Gallarate, come nella mappa."),
     ("Foto al posto del titolare",
-     "Una foto di attrezzi stava dove va il ritratto: sostituita con un riquadro vuoto delle stesse misure, e "
+     "Una foto di attrezzi stava dove va il ritratto: sostituita con un segnaposto «Foto del titolare · in arrivo» delle stesse misure, e "
      "nessuna immagine del titolare nei dati strutturati."),
     ("Omonimia",
      "edilbruno.it è di un'altra azienda (Capaccio Paestum): nessun dominio o email inventati su quel nome, "
@@ -295,7 +295,7 @@ STATO = [
     ("Bozza", "etichetta su ogni pagina, noindex, robots.txt Disallow: / finché BOZZA è true", "per scelta"),
     ("Email e modulo", "email d'esempio (bozza@example.com), modulo scollegato: non parte nulla", "manca"),
     ("Lavori e foto", "9 lavori e 34 foto d'esempio (Unsplash, licenza libera): servono lavori e foto veri", "manca"),
-    ("Titolare", "nessuna foto (riquadro vuoto) e nessuna presentazione: da scrivere con lui", "manca"),
+    ("Titolare", "foto in arrivo (segnaposto con sagoma) e nessuna presentazione: da scrivere con lui", "manca"),
     ("Logo, colori, dominio", "provvisori; nessun dominio (edilbruno.it è di un'altra azienda)", "manca"),
 ]
 righe = [[Paragraph("<b>voce</b>", CELL), Paragraph("<b>stato</b>", CELL), Paragraph("<b>esito</b>", CELL)]]
