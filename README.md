@@ -12,6 +12,7 @@ npm run build          # dist/ statico
 npm run check-residui  # residui dei clienti delle basi precedenti: deve dare 0
 node scripts/foto-unsplash.mjs   # riscarica le foto d'esempio (idempotente)
 node scripts/marchio.mjs         # rigenera logo, favicon, icone e OG provvisori
+py -3 scripts/pdf-report.py      # PDF di consegna (4 pagine): docs/palette-e-interventi.pdf
 ```
 
 > Non usare `npm run placeholders`: riporterebbe logo e icone ai segnaposto grigi.
