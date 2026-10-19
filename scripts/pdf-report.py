@@ -254,6 +254,9 @@ MIGLIORIE = [
     ("SEO pronta",
      "Titoli e descrizioni per pagina, dati strutturati (impresa, sede, titolare, servizi, lavori), sitemap, "
      "llms.txt, Open Graph con immagine: si attivano togliendo la bozza."),
+    ("Più movimento",
+     "Hero e testate entrano a cascata, foto che si scoprono, numeri che contano, icone che si disegnano, mattoni "
+     "della fascia contatti che si posano, parallasse, barra di lettura. Tutto spento con \"riduci animazioni\"."),
     ("Bozza con due interruttori",
      "BOZZA = true mette etichetta, note, noindex e robots bloccato; il pulsante nell'etichetta mostra o "
      "nasconde la sottolineatura dei testi inventati, e il browser ricorda la scelta."),
@@ -285,7 +288,7 @@ STATO = [
     ("Build", "verde: 22 pagine, anche da clone pulito con installazione da zero (come Netlify)", "ok"),
     ("Link e immagini", "2374 riferimenti interni controllati con maiuscole esatte (Linux), 0 rotti", "ok"),
     ("Layout", "nessuno scorrimento orizzontale su 22 pagine a 375, 768 e 1280 px (66 controlli)", "ok"),
-    ("Animazioni", "intro, carosello, header, reveal, lightbox e menu mobile verificati a schermo", "ok"),
+    ("Animazioni", "intro, carosello, reveal, lightbox, menu e le animazioni aggiunte verificati a schermo", "ok"),
     ("Netlify", "netlify.toml: build npm run build, cartella dist, Node 22, installazione senza lockfile", "ok"),
     ("GitHub", "push su fadericosarghi23-ai/edilbruno, branch main", "ok"),
     ("Residui", "nessun dato dei clienti delle basi precedenti (195 termini controllati)", "ok"),

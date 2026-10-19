@@ -31,6 +31,7 @@ const MATTONI = [
   if (!intro || !html.classList.contains('intro-on')) return;
   var fine = function () { html.classList.remove('intro-on'); };
   intro.addEventListener('animationend', function (e) { if (e.target === intro) fine(); });
-  setTimeout(fine, 4500);
+  // riserva poco dopo la durata dell'intro (2,8 s): se animationend non arriva, la hero non resta vuota
+  setTimeout(fine, 3200);
 })();
 </script>

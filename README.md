@@ -83,6 +83,15 @@ compaiono “EDILBRUNO” e “Impresa edile · Gallarate”, poi il pannello sa
 `<head>` di `Layout.astro` (sessionStorage). Saltata con “riduci animazioni” e senza JavaScript. Col logo vero
 va cambiato il segno in `Intro.astro`.
 
+## Animazioni aggiunte
+
+Oltre a quelle della base (carosello, header, reveal, lightbox, hover), in `src/components/Animazioni.astro`
++ blocco "Animazioni aggiunte" in coda a `global.css`: entrata a cascata della hero (aspetta la fine dell'intro) e delle
+testate, pallini del carosello che si riempiono in 6 s, invito a scorrere, barra di avanzamento della lettura, figli di
+griglie ed elenchi a cascata, foto che si scoprono con una tendina, numeri che contano da 0, icone dei servizi che si
+disegnano, lineetta dei sopratitoli, mattoni della fascia contatti che si posano, parallasse sulle testate, bottoni che si
+sollevano con un riflesso. Con "riduci animazioni" o senza JavaScript tutto resta visibile e fermo.
+
 ## Rispetto alla base
 
 Tolti seconda sede, pagina premi (`/metodo/`, `ProcessCards`), "dove lavoriamo", collaboratori, secondo

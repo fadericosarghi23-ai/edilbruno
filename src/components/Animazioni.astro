@@ -1,0 +1,90 @@
+---
+/**
+ * Animazioni aggiuntive di EDILBRUNO (oltre a quelle della base, che restano com'erano).
+ * Lo script aggiunge le classi solo se c'è JS e se "riduci animazioni" è spento: senza JS o con
+ * riduci animazioni tutto resta visibile e fermo. Stili in coda a global.css ("Animazioni aggiunte").
+ *
+ * - barra di avanzamento della lettura in alto
+ * - cascata (stagger) dei figli di griglie ed elenchi quando entrano in vista
+ * - foto che si scoprono con una tendina dal basso + leggero zoom
+ * - numeri che contano da 0 (mantengono prefisso/suffisso: "30 km", "48 h", "100%")
+ * - icone dei servizi che si disegnano
+ * - mattoni della fascia contatti che si posano uno alla volta
+ * - parallasse leggera sulla foto delle testate delle pagine interne
+ * L'entrata della hero e delle testate e i pallini del carosello che si riempiono sono solo CSS.
+ */
+---
+<div class="progresso" aria-hidden="true"></div>
+<script>
+const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const barra = document.querySelector<HTMLElement>('.progresso');
+
+if (!ridotto) {
+  const io = new IntersectionObserver(
+    (voci) => voci.forEach((v) => {
+      if (!v.isIntersecting) return;
+      v.target.classList.add('is-in');
+      io.unobserve(v.target);
+    }),
+    { rootMargin: '0px 0px -10% 0px' },
+  );
+  const osserva = (sel: string, classe: string, fn?: (el: HTMLElement) => void) =>
+    document.querySelectorAll<HTMLElement>(sel).forEach((el) => { el.classList.add(classe); fn?.(el); io.observe(el); });
+
+  // cascata dei figli
+  osserva('.services, .stats, .checklist, .contact-cards, .info-cards, .team-grid, .gallery, .filters, .site-footer .top, .areas', 'cascata', (c) =>
+    [...c.children].forEach((f, i) => (f as HTMLElement).style.setProperty('--d', String(Math.min(i, 10)))));
+
+  // foto con tendina
+  osserva('.ratio-45, .ratio-32, .projects-grid .card .media, .split .card .media, .member .photo, .team-strip a, .map, .map-box', 'tendina');
+
+  // icone che si disegnano
+  osserva('.service .icon, .service-icon', 'disegna', (svg) =>
+    svg.querySelectorAll('path, rect, circle').forEach((p) => p.setAttribute('pathLength', '1')));
+
+  // mattoni della fascia contatti
+  osserva('.cta', 'posa');
+
+  // numeri che contano
+  document.querySelectorAll<HTMLElement>('.stat strong').forEach((el) => {
+    const m = el.textContent?.trim().match(/^(\D*)(\d+)(.*)$/);
+    if (!m) return;
+    const [, pre, num, suf] = m;
+    const fine = Number(num);
+    el.textContent = pre + '0' + suf;
+    const conta = new IntersectionObserver((v) => {
+      if (!v[0].isIntersecting) return;
+      conta.disconnect();
+      const t0 = performance.now(), durata = 1400;
+      const passo = (t: number) => {
+        const p = Math.min(1, (t - t0) / durata);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = pre + Math.round(fine * e) + suf;
+        if (p < 1) requestAnimationFrame(passo);
+      };
+      requestAnimationFrame(passo);
+    }, { rootMargin: '0px 0px -10% 0px' });
+    conta.observe(el);
+  });
+
+  // parallasse delle testate delle pagine interne
+  const testate = [...document.querySelectorAll<HTMLElement>('.page-hero > picture')];
+  testate.forEach((p) => p.classList.add('parallasse'));
+
+  let attesa = false;
+  const aggiorna = () => {
+    attesa = false;
+    const y = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    if (barra) barra.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+    testate.forEach((p) => {
+      const alto = p.parentElement!.offsetHeight;
+      if (y < alto) p.style.transform = `translate3d(0, ${Math.min(y * 0.25, alto * 0.12).toFixed(1)}px, 0) scale(1.15)`;
+    });
+  };
+  window.addEventListener('scroll', () => { if (!attesa) { attesa = true; requestAnimationFrame(aggiorna); } }, { passive: true });
+  aggiorna();
+} else if (barra) {
+  barra.remove();
+}
+</script>
